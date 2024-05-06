@@ -1,0 +1,1 @@
+python main.py --config config/PEMS08.json --gpu 1 --model_name FSTL
