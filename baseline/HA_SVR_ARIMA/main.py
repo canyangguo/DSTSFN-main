@@ -91,19 +91,20 @@ if args.model_name == 'ARIMA':
     for i in range(num):
         print('{}/{}'.format(i+1, num))
         ts = test.iloc[:, i]
-        ts_log = ts#np.log(ts)
+        #ts_log = ts#np.log(ts)
+        ts_log = np.log(ts)
         ts_log = np.array(ts_log, dtype=float)
         where_are_inf = np.isinf(ts_log)
         ts_log[where_are_inf] = 0
         ts_log = pd.Series(ts_log)
         ts_log.index = a1
-        model = ARIMA(ts_log, order=[1, 0, 0])
+        model = ARIMA(ts_log, order=[3, 0, 2])
         Model = model.fit()
         pre = []
         label = []
         for j in range(length-23):
             predict = Model.predict(j+12, j+12+11, dynamic=True)#当设置为True时，预测会使用模型之前步骤的预测值作为输入，而不是原始数据。这通常用于滚动预测或样本外预测。   
-            #predict = np.exp(predict)
+            predict = np.exp(predict)
             #ts = ts[predict.index]
             pre.append(predict)
             label.append(test_[j+12: j+12+12, i])
