@@ -5,10 +5,15 @@ from exp.exp_short_term_forecasting import Exp_Short_Term_Forecast
 import random
 import numpy as np
 
-fix_seed = 2021
-random.seed(fix_seed)
-torch.manual_seed(fix_seed)
-np.random.seed(fix_seed)
+seed = 0
+random.seed(seed)
+np.random.seed(seed)
+torch.manual_seed(seed)  # for CPU
+torch.cuda.manual_seed(seed)  # for current GPU
+torch.cuda.manual_seed_all(seed)  # for all GPU
+torch.backends.cudnn.benchmark = False
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.enabled = False
 
 parser = argparse.ArgumentParser(description='TimesNet')
 
